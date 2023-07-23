@@ -17,22 +17,15 @@ I will be describing my thought process as I make programming decisions in regar
 
 ### 1. Analyze the app's functionality
 
-- It's a two player card game.
-- The player's will compete to:
-    a. end up with the most cards in a set amount of time
-    b. eliminate the opponents stack of cards in battle.
-    (possible easier method to see who has the most cards after going through the starting cards // or tracking points where the regular two card win is a point and the 6+ card win is 3 points..(double war))
-
-- Each player starts with half a deck of cards.
-- To win the the players will each:
-    a. draw a card with a set value - the player with the higher value card wins that round and adds those card to their hand.
-    b. if the cards are equal in value, the players go to war.
-        -during war each player adds an additional card face down and one face up which will be the new cards of comparison. The winner collects all cards.
+- A one player trivia game testing knowledge of Unit 1.
+- The player will be timed and given points for each correct answer.
+- Each question will have four multiple choice answers to choose from.
+- The game ends when the player completes all the questions and is given a total score based on correct response.
 
 
 ### 2. Determine the overall design (look & feel) of the app
 
-The game will appear to be played on a basic green card table with a straightforward UI.
+The game will be formatted in a standard quiz layout with the question on top and multiple choice answers to select below.
 
 ### 3. Wireframe the UI
 
@@ -44,18 +37,6 @@ Here's the wireframe that will guide us today:
 
 
 
-<table>
-    <tr>
-      <td>
-        <h2>Player 1</h2>
-        <div class="card"></div>
-      </td>
-      <td>
-        <h2>Player 2</h2>
-        <div class="card"></div>
-      </td>
-    </tr>
-  </table>
 
 ### 4. Pseudocode
 
@@ -66,6 +47,8 @@ I'll regularly be typing pseudocode as comments within the functions as I code.
 ### 5. Identify the application's state (application-wide data)
 
 What information does the application need to "remember" throughout its execution?
+
+-It will need to count the number of correct responses.
 
 Use the wireframe and pseudocode to help identify what state needs to be tracked.
 
