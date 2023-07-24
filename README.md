@@ -1,4 +1,4 @@
-# seiWarGameProject
+# seiTriviaGameProject
 
 ## Intro
 
