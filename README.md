@@ -35,7 +35,14 @@ They also help reveal what state variables need to be defined.
 
 Here's the wireframe that will guide us today:
 
-
+<div id="title">What is the functionality of the "mv" command in the terminal?</div>
+  <ul>
+    <li class="options"></li>
+    <li class="options"></li>
+    <li class="options"></li>
+    <li class="options"></li>
+  </ul>
+  <button id="btn">Submit</button>
 
 
 ### 4. Pseudocode
