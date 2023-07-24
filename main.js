@@ -1,5 +1,24 @@
+
+function startGame() {
+
+}
+
+function nextQuestion() {
+
+}
+
+function selectAnswer() {
+  
+}
+
 // create object
+
 const questions = [
+  {
+    question0: 'What css rule is used for changing any HTML element into a flexbox container?',
+    options: ['flexbox', 'grid', 'container', 'display'],
+    correctAnswer: 3
+  },
   {
     question1: 'What is the functionality of the "mv" command in the terminal?',
     options: ['move', 'copy', 'rename', 'all of the above'],
@@ -30,6 +49,21 @@ const questions = [
     options: ['document.querySelector(“#globalNav")', 'document.querySelectorAll(“#globalNav a”)', 'element.querySelectorAll(“#a”)', 'document.getElementById(“#globalNav a”)'],
     correctAnswer: 1
   },
+  {
+    question7: 'An application that revolves around the management and manipulation of data as its primary focus is what?',
+    options: ['object-oriented', 'DOM-manipulation', 'data-centric', 'data-oriented'],
+    correctAnswer: 2
+  },
+  {
+    question8: 'Refers to the concept of bundling data and the functions that operate on that data within a single unit.',
+    options: ['object oriented programming', 'DOM', 'array', 'DRY code'],
+    correctAnswer: 0
+  },
+  {
+    question9: 'A way to create blueprints for objects that share common properties and behavior.',
+    options: ['CSS', 'JS classes', '<div>', 'pseudocode'],
+    correctAnswer: 1
+  }
 
 ];
 function showQuestion(mv) {
