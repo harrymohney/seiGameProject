@@ -1,6 +1,4 @@
 //  remaining steps to MVP
-// fix next button
-// make only one answer selectable at a time
 // log score
 function showQuestion(question) {
   // select DOM element
@@ -35,27 +33,6 @@ function showQuestion(question) {
 
 // questions array
 const questions = [
-  {
-    question: 'What css rule is used for changing any HTML element into a flexbox container?',
-    options: [
-      {
-        text: 'flexbox',
-        correct: false
-      },
-      {
-        text: 'grid',
-        correct: false
-      },
-      {
-        text: 'container',
-        correct: false
-      },
-      {
-        text: 'display',
-        correct: true
-      }
-    ]
-  },
   {
     question: 'What is the functionality of the "mv" command in the terminal?',
     options: [
@@ -268,16 +245,44 @@ const questions = [
   }
 ];
       
-// keep track of the current question
-let currentQuestionIndex = 0; 
+// init variables
+let currentQuestionIndex = 0;
+let score = 0;
 
-showQuestion(questions[currentQuestionIndex]);
+function showQuestion(question) {
+  let containEl = document.getElementById('q-contain');
+  containEl.textContent = question.question;
 
-let nextBtn = document.getElementById('next-btn');
+  let answer = document.querySelectorAll('.answer');
 
+  answer.forEach(function(btn, idx) {
+    btn.textContent = question.options[idx].text;
+
+    
+    btn.classList.remove('selected');
+
+    btn.addEventListener('click', function() {
+      
+      answer.forEach(function(btn) {
+        btn.classList.remove('selected');
+      });
+
+      btn.classList.add('selected');
+
+      const selectedAnswerIndex = idx;
+
+      if (question.options[selectedAnswerIndex].correct) {
+        console.log('Correct!');
+        score++;
+      } else {
+        console.log('So close!')
+      }
+    });
+  });
+};
+const nextBtn = document.getElementById('next-btn');
 
 nextBtn.addEventListener('click', function() {
-  // iterate to the next question
   currentQuestionIndex++;
   if (currentQuestionIndex < questions.length) {
     showQuestion(questions[currentQuestionIndex]);

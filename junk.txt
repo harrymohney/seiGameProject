@@ -43,3 +43,20 @@
 // function selectAnswer() {
 
 // };
+
+
+showQuestion(questions[currentQuestionIndex]);
+
+let nextBtn = document.getElementById('next-btn');
+
+
+nextBtn.addEventListener('click', function() {
+  // iterate to the next question
+  currentQuestionIndex++;
+  if (currentQuestionIndex < questions.length) {
+    showQuestion(questions[currentQuestionIndex]);
+  } else {
+    console.log('End of the quiz, GREAT JOB!');
+    console.log('Your final score: ' + score);
+  }
+});
