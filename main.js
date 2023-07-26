@@ -239,7 +239,7 @@ answerButtons.forEach(function(btn, idx) {
         btn.disabled = true;
       });
 
-      if (currentQuestionIndex < totalQuestions - 1) {
+      if (currentQuestionIndex < totalQuestions) {
         answerButtons = document.querySelectorAll('.answer');
         answerButtons.forEach(function(btn) {
           btn.disabled = false;
@@ -247,6 +247,7 @@ answerButtons.forEach(function(btn, idx) {
       }
 
       nextBtn.style.display = 'block';
+      resetBtn.style.display = 'none';
       hasAnsweredCurrentQuestion = true;
     }
   });
@@ -268,8 +269,10 @@ function showQuestion(question) {
 
   if (currentQuestionIndex === totalQuestions) {
     nextBtn.style.display = 'none';
+    resetBtn.style.display = 'block';
   } else {
     nextBtn.style.display = 'block';
+    resetBtn.style.display = 'none';
   }
 
   hasAnsweredCurrentQuestion = false;
@@ -286,5 +289,19 @@ nextBtn.addEventListener('click', function() {
   } else {
     console.log('End of the quiz, GREAT JOB!');
     console.log('Your final score: ' + score);
+  
+    let containEl = document.getElementById('q-contain');
+    containEl.innerHTML = 'Quiz Completed! Your final score: ' + score + '/' + totalQuestions;
+    resetBtn.style.display = 'block';
   }
+});
+
+resetBtn.addEventListener('click', function() {
+  currentQuestionIndex = 0;
+  score = 0;
+  scoreDisplay.textContent = 'Score: ' + score;
+  showQuestion(questions[currentQuestionIndex]);
+
+  resetBtn.style.display = 'none';
+  nextBtn.style.display = 'block';
 });
