@@ -1,4 +1,7 @@
-
+//  remaining steps to MVP
+// fix next button
+// make only one answer selectable at a time
+// log score
 function showQuestion(question) {
   // select DOM element
   let containEl = document.getElementById('q-contain');
@@ -12,6 +15,14 @@ function showQuestion(question) {
     btn.textContent = question.options[idx].text;
 
     btn.addEventListener('click', function() {
+      
+      answer.forEach(function(btn) {
+        btn.classList.remove('selected');
+      });
+      btn.classList.add('selected');
+
+      const selectedAnswerIndex = idx;
+
       // check correct answer
       if (question.options[idx].correct) {
         console.log('Correct!');
@@ -264,13 +275,14 @@ showQuestion(questions[currentQuestionIndex]);
 
 let nextBtn = document.getElementById('next-btn');
 
+
 nextBtn.addEventListener('click', function() {
   // iterate to the next question
   currentQuestionIndex++;
-  if (currentQuestionIndex <= questions.length) {
+  if (currentQuestionIndex < questions.length) {
     showQuestion(questions[currentQuestionIndex]);
   } else {
-    // if all questions have been answered
-    console.log('End of the quiz, GREAT JOB!'); 
+    console.log('End of the quiz, GREAT JOB!');
+    console.log('Your final score: ' + score);
   }
 });
