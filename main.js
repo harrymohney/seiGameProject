@@ -1,37 +1,4 @@
-//  remaining steps to MVP
-// log score
-function showQuestion(question) {
-  // select DOM element
-  let containEl = document.getElementById('q-contain');
-  // modify it
-  containEl.textContent = question.question;
-  
-  let answer = document.querySelectorAll('.answer');
 
-  answer.forEach(function(btn, idx) {
-    // access the text of each answer option
-    btn.textContent = question.options[idx].text;
-
-    btn.addEventListener('click', function() {
-      
-      answer.forEach(function(btn) {
-        btn.classList.remove('selected');
-      });
-      btn.classList.add('selected');
-
-      const selectedAnswerIndex = idx;
-
-      // check correct answer
-      if (question.options[idx].correct) {
-        console.log('Correct!');
-      } else {
-        console.log('So close!')
-      }
-    });
-  });
-};
-
-// questions array
 const questions = [
   {
     question: 'What is the functionality of the "mv" command in the terminal?',
@@ -244,47 +211,77 @@ const questions = [
     ]
   }
 ];
-      
-// init variables
+
+const startBtn = document.getElementById('start-btn');
+const nextBtn = document.getElementById('next-btn');
+const resetBtn = document.getElementById('reset-btn');
+const scoreDisplay = document.getElementById('score');
+const totalQuestions = questions.length;
 let currentQuestionIndex = 0;
 let score = 0;
+let answerButtons = document.querySelectorAll('.answer');
+let hasAnsweredCurrentQuestion = false;
+
+answerButtons.forEach(function(btn, idx) {
+  btn.addEventListener('click', function() {
+    if (!hasAnsweredCurrentQuestion) {
+      const selectedAnswerIndex = idx;
+
+      if (questions[currentQuestionIndex].options[selectedAnswerIndex].correct) {
+        console.log('Correct!');
+        score++;
+        scoreDisplay.textContent = 'Score: ' + score;
+      } else {
+        console.log('So close!');
+      }
+
+      answerButtons.forEach(function(btn) {
+        btn.disabled = true;
+      });
+
+      if (currentQuestionIndex < totalQuestions - 1) {
+        answerButtons = document.querySelectorAll('.answer');
+        answerButtons.forEach(function(btn) {
+          btn.disabled = false;
+        });
+      }
+
+      nextBtn.style.display = 'block';
+      hasAnsweredCurrentQuestion = true;
+    }
+  });
+});
+
+startBtn.addEventListener('click', function() {
+  startBtn.style.display = 'none';
+  showQuestion(questions[currentQuestionIndex]);
+});
 
 function showQuestion(question) {
   let containEl = document.getElementById('q-contain');
   containEl.textContent = question.question;
 
-  let answer = document.querySelectorAll('.answer');
-
-  answer.forEach(function(btn, idx) {
+  answerButtons.forEach(function(btn, idx) {
     btn.textContent = question.options[idx].text;
-
-    
-    btn.classList.remove('selected');
-
-    btn.addEventListener('click', function() {
-      
-      answer.forEach(function(btn) {
-        btn.classList.remove('selected');
-      });
-
-      btn.classList.add('selected');
-
-      const selectedAnswerIndex = idx;
-
-      if (question.options[selectedAnswerIndex].correct) {
-        console.log('Correct!');
-        score++;
-      } else {
-        console.log('So close!')
-      }
-    });
+    btn.disabled = false;
   });
-};
-const nextBtn = document.getElementById('next-btn');
+
+  if (currentQuestionIndex === totalQuestions) {
+    nextBtn.style.display = 'none';
+  } else {
+    nextBtn.style.display = 'block';
+  }
+
+  hasAnsweredCurrentQuestion = false;
+}
 
 nextBtn.addEventListener('click', function() {
+  if (!hasAnsweredCurrentQuestion) {
+    return;
+  }
+
   currentQuestionIndex++;
-  if (currentQuestionIndex < questions.length) {
+  if (currentQuestionIndex < totalQuestions) {
     showQuestion(questions[currentQuestionIndex]);
   } else {
     console.log('End of the quiz, GREAT JOB!');
