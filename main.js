@@ -231,8 +231,10 @@ answerButtons.forEach(function(btn, idx) {
         console.log('Correct!');
         score++;
         scoreDisplay.textContent = 'Score: ' + score;
+        btn.classList.add('correct');
       } else {
         console.log('So close!');
+        btn.classList.add('incorrect');
       }
 
       answerButtons.forEach(function(btn) {
@@ -265,6 +267,7 @@ function showQuestion(question) {
   answerButtons.forEach(function(btn, idx) {
     btn.textContent = question.options[idx].text;
     btn.disabled = false;
+    btn.classList.remove('correct', 'incorrect');
   });
 
   if (currentQuestionIndex === totalQuestions) {
