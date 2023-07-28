@@ -64,7 +64,8 @@ I'll regularly be typing pseudocode as comments within the functions as I code.
 
 What information does the application need to "remember" throughout its execution?
 
--It will need to count the number of correct responses.
+- It will need to count the number of correct responses.
+- It will need to track the current question index
 
 Use the wireframe and pseudocode to help identify what state needs to be tracked.
 
@@ -80,15 +81,15 @@ Our goal is to code the HTML & CSS that results in a UI that looks like our wire
 We will need to add elements in **index.html** for the following from top to bottom:
 
 - The heading
-- Three buttons
-- The player labels
-- The win values
+- A question container
+- Four buttons
+- A next button
 
 We will also include:
 
 - A start button
-- A gameover message
 - A restart button
+- A score tracker
 
 If an element's content is going to come from the `render()` function, you may want to temporarily include mocked content in the HTML to help with layout and styling. However, once the content is being provided by the `render()` function, you should remove the mocked content from **index.html**.
 
