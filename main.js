@@ -222,50 +222,13 @@ let score = 0;
 let answerButtons = document.querySelectorAll('.answer');
 let hasAnsweredCurrentQuestion = false;
 
-answerButtons.forEach(function(btn, idx) {
-  btn.addEventListener('click', function() {
-    if (!hasAnsweredCurrentQuestion) {
-      const selectedAnswerIndex = idx;
-
-      if (questions[currentQuestionIndex].options[selectedAnswerIndex].correct) {
-        console.log('Correct!');
-        score++;
-        scoreDisplay.textContent = 'Score: ' + score;
-        btn.classList.add('correct');
-      } else {
-        console.log('So close!');
-        btn.classList.add('incorrect');
-      }
-
-      answerButtons.forEach(function(btn) {
-        btn.disabled = true;
-      });
-
-      if (currentQuestionIndex < totalQuestions) {
-        answerButtons = document.querySelectorAll('.answer');
-        answerButtons.forEach(function(btn) {
-          btn.disabled = false;
-        });
-      }
-
-      nextBtn.style.display = 'block';
-      resetBtn.style.display = 'none';
-      hasAnsweredCurrentQuestion = true;
-    }
-  });
-});
-
-startBtn.addEventListener('click', function() {
-  startBtn.style.display = 'none';
-  showQuestion(questions[currentQuestionIndex]);
-});
-
-function showQuestion(question) {
+function render() {
+  const currentQuestion = questions[currentQuestionIndex];
   let containEl = document.getElementById('q-contain');
-  containEl.textContent = question.question;
+  containEl.textContent = currentQuestion.question;
 
   answerButtons.forEach(function(btn, idx) {
-    btn.textContent = question.options[idx].text;
+    btn.textContent = currentQuestion.options[idx].text;
     btn.disabled = false;
     btn.classList.remove('correct', 'incorrect');
   });
@@ -281,30 +244,67 @@ function showQuestion(question) {
   hasAnsweredCurrentQuestion = false;
 }
 
-nextBtn.addEventListener('click', function() {
-  if (!hasAnsweredCurrentQuestion) {
-    return;
-  }
+function init() {
+  startBtn.addEventListener('click', function() {
+    startBtn.style.display = 'none';
+    render();
+  });
 
-  currentQuestionIndex++;
-  if (currentQuestionIndex < totalQuestions) {
-    showQuestion(questions[currentQuestionIndex]);
-  } else {
-    console.log('End of the quiz, GREAT JOB!');
-    console.log('Your final score: ' + score);
-  
-    let containEl = document.getElementById('q-contain');
-    containEl.innerHTML = 'Quiz Completed! Your final score: ' + score + '/' + totalQuestions;
-    resetBtn.style.display = 'block';
-  }
-});
+  answerButtons.forEach(function(btn, idx) {
+    btn.addEventListener('click', function() {
+      if (!hasAnsweredCurrentQuestion) {
+        const selectedAnswerIndex = idx;
 
-resetBtn.addEventListener('click', function() {
-  currentQuestionIndex = 0;
-  score = 0;
-  scoreDisplay.textContent = 'Score: ' + score;
-  showQuestion(questions[currentQuestionIndex]);
+        if (questions[currentQuestionIndex].options[selectedAnswerIndex].correct) {
+          score++;
+          scoreDisplay.textContent = 'Score: ' + score;
+          btn.classList.add('correct');
+        } else {
+          btn.classList.add('incorrect');
+        }
 
-  resetBtn.style.display = 'none';
-  nextBtn.style.display = 'block';
-});
+        answerButtons.forEach(function(btn) {
+          btn.disabled = true;
+        });
+
+        if (currentQuestionIndex < totalQuestions) {
+          answerButtons = document.querySelectorAll('.answer');
+          answerButtons.forEach(function(btn) {
+            btn.disabled = false;
+          });
+        }
+
+        nextBtn.style.display = 'block';
+        resetBtn.style.display = 'none';
+        hasAnsweredCurrentQuestion = true;
+      }
+    });
+  });
+
+  nextBtn.addEventListener('click', function() {
+    if (!hasAnsweredCurrentQuestion) {
+      return;
+    }
+    currentQuestionIndex++;
+    if (currentQuestionIndex < totalQuestions) {
+      render();
+    } else {
+      let containEl = document.getElementById('q-contain');
+      containEl.innerHTML = 'Quiz Completed! Your final score: ' + score + '/' + totalQuestions;
+      resetBtn.style.display = 'block';
+    }
+  });
+
+  resetBtn.addEventListener('click', function() {
+    currentQuestionIndex = 0;
+    score = 0;
+    scoreDisplay.textContent = 'Score: ' + score;
+    render();
+
+    resetBtn.style.display = 'none';
+    nextBtn.style.display = 'block';
+  });
+}
+
+init();
+
